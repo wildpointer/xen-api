@@ -1692,6 +1692,7 @@ let vm_assert_can_boot_here = call
 		Api_errors.vm_requires_sr;
 		Api_errors.vm_host_incompatible_version;
 	]
+	~doc_tags:[Memory]
 	()
 
 let vm_assert_agile = call
@@ -1731,6 +1732,7 @@ let vm_maximise_memory = call
 	  ]
   ~result:(Int, "The maximum possible static-max")
   ~allowed_roles:_R_READ_ONLY
+  ~doc_tags:[Memory]
   ()
 
 let vm_get_allowed_VBD_devices = call ~flags:[`Session] ~no_current_operations:true
@@ -1775,6 +1777,7 @@ let vm_compute_memory_overhead = call
 	~hide_from_docs:false
 	~result:(Int, "the virtualization memory overhead of the VM.")
 	~allowed_roles:_R_READ_ONLY
+	~doc_tags:[Memory]
 	()
 
 let vm_set_memory_dynamic_max = call ~flags:[`Session]
@@ -1786,7 +1789,9 @@ let vm_set_memory_dynamic_max = call ~flags:[`Session]
 		Int, "value", "The new value of memory_dynamic_max";
 	]
 	~allowed_roles:_R_VM_POWER_ADMIN
-	~errs:[] ()
+	~errs:[]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_dynamic_min = call ~flags:[`Session]
 	~in_product_since:rel_midnight_ride
@@ -1797,7 +1802,9 @@ let vm_set_memory_dynamic_min = call ~flags:[`Session]
 		Int, "value", "The new value of memory_dynamic_min";
 	]
 	~allowed_roles:_R_VM_POWER_ADMIN
-	~errs:[] ()
+	~errs:[]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_dynamic_range = call
 	~name:"set_memory_dynamic_range"
@@ -1809,7 +1816,9 @@ let vm_set_memory_dynamic_range = call
 		Ref _vm, "self", "The VM";
 		Int, "min", "The new minimum value";
 		Int, "max", "The new maximum value";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 (* When HA is enabled we need to prevent memory *)
 (* changes which will break the recovery plan.  *)
@@ -1822,7 +1831,9 @@ let vm_set_memory_static_max = call ~flags:[`Session]
 	~params:[
 		Ref _vm, "self", "The VM to modify";
 		Int, "value", "The new value of memory_static_max";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_static_min = call ~flags:[`Session]
 	~in_product_since:rel_midnight_ride
@@ -1833,7 +1844,9 @@ let vm_set_memory_static_min = call ~flags:[`Session]
 	~params:[
 		Ref _vm, "self", "The VM to modify";
 		Int, "value", "The new value of memory_static_min";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_static_range = call
 	~name:"set_memory_static_range"
@@ -1844,7 +1857,9 @@ let vm_set_memory_static_range = call
 	~params:[Ref _vm, "self", "The VM";
 		Int, "min", "The new minimum value";
 		Int, "max", "The new maximum value";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_limits = call
 	~name:"set_memory_limits"
@@ -1856,7 +1871,9 @@ let vm_set_memory_limits = call
 		Int, "static_max", "The new value of memory_static_max.";
 		Int, "dynamic_min", "The new value of memory_dynamic_min.";
 		Int, "dynamic_max", "The new value of memory_dynamic_max.";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_set_memory_target_live = call
 	~name:"set_memory_target_live"
@@ -1867,7 +1884,9 @@ let vm_set_memory_target_live = call
 	~params:[
 		Ref _vm, "self", "The VM";
 		Int, "target", "The target in bytes";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_wait_memory_target_live = call
 	~name:"wait_memory_target_live"
@@ -1877,7 +1896,9 @@ let vm_wait_memory_target_live = call
 	~allowed_roles:_R_READ_ONLY
 	~params:[
 		Ref _vm, "self", "The VM";
-	] ()
+	]
+	~doc_tags:[Memory]
+	()
 
 let vm_get_cooperative = call
 	~name:"get_cooperative"
@@ -1889,6 +1910,7 @@ let vm_get_cooperative = call
 	]
 	~result:(Bool, "true if the VM is currently 'co-operative'; false otherwise")
 	~allowed_roles:_R_READ_ONLY
+	~doc_tags:[Memory]
 	()
 
 let vm_query_services = call
@@ -2538,6 +2560,7 @@ let host_compute_free_memory = call
 	~hide_from_docs:false
 	~result:(Int, "the amount of free memory on the host.")
   ~allowed_roles:_R_READ_ONLY
+	~doc_tags:[Memory]
 	()
 
 let host_compute_memory_overhead = call
@@ -2549,6 +2572,7 @@ let host_compute_memory_overhead = call
 	~hide_from_docs:false
 	~result:(Int, "the virtualization memory overhead of the host.")
 	~allowed_roles:_R_READ_ONLY
+	~doc_tags:[Memory]
 	()
 
 (* Diagnostics see if host is in emergency mode *)
@@ -2571,6 +2595,7 @@ let host_signal_networking_change = call ~flags:[`Session]
   ~pool_internal:true
   ~hide_from_docs:true
   ~allowed_roles:_R_LOCAL_ROOT_ONLY
+  ~doc_tags:[Networking]
   ()
 
 let host_notify = call
@@ -2600,6 +2625,7 @@ let host_management_reconfigure = call
     Ref _pif, "pif", "reference to a PIF object corresponding to the management interface";
 	  ]
   ~allowed_roles:_R_POOL_OP
+  ~doc_tags:[Networking]
   ()
 
 let host_local_management_reconfigure = call ~flags:[`Session]
@@ -2627,6 +2653,7 @@ let host_management_disable = call ~flags:[`Session]
   ~doc:"Disable the management network interface"
   ~params:[]
   ~allowed_roles:_R_POOL_OP
+  ~doc_tags:[Networking]
   ()
 
 let host_get_management_interface = call
@@ -2636,6 +2663,7 @@ let host_get_management_interface = call
   ~params:[Ref _host, "host", "Which host's management interface is required"]
   ~result:(Ref _pif, "The management interface for the host")
   ~allowed_roles:_R_POOL_OP
+  ~doc_tags:[Networking]
   ()
 
 (* Simple host evacuate message for Miami.
@@ -3252,7 +3280,7 @@ let create_obj ?lifecycle ~in_oss_since ?in_product_since ?(internal_deprecated_
 	?(contents_default_reader_roles=default_field_reader_roles) ?(contents_default_writer_roles=None)
 	?(implicit_messages_allowed_roles=_R_ALL) (* used in implicit obj msgs (get_all, etc) *)
 	?force_custom_actions:(force_custom_actions=None) (* None,Some(RW),Some(StaticRO) *)
-	~messages_default_allowed_roles (* used in constructor, destructor and explicit obj msgs *)
+	~messages_default_allowed_roles ?(doc_tags=[])(* used in constructor, destructor and explicit obj msgs *)
 	() =
 	let contents_default_writer_roles = if contents_default_writer_roles=None then messages_default_allowed_roles else contents_default_writer_roles in
 	let get_field_reader_roles = function None->contents_default_reader_roles|r->r in
@@ -3292,6 +3320,7 @@ let create_obj ?lifecycle ~in_oss_since ?in_product_since ?(internal_deprecated_
 		doccomments = doccomments; gen_constructor_destructor = gen_constructor_destructor; force_custom_actions = force_custom_actions;
 		persist = persist; gen_events = gen_events; obj_release = release;
 		in_database=in_db; obj_allowed_roles = messages_default_allowed_roles; obj_implicit_msg_allowed_roles = implicit_messages_allowed_roles;
+		obj_doc_tags = doc_tags;
 	}
 
 (** Additional messages for srs *)
@@ -3605,27 +3634,27 @@ let user = (* DEPRECATED in favor of subject *)
 let guest_memory =
 	let field = field ~ty:Int in
 	[
-		field "overhead" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:DynamicRO "Virtualization memory overhead (bytes)." ~default_value:(Some (VInt 0L));
-		field "target" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamically-set memory target (bytes). The value of this field indicates the current target for memory available to this VM." ~default_value:(Some (VInt 0L)) ~internal_deprecated_since:rel_midnight_ride;
-		field "static_max" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Statically-set (i.e. absolute) maximum (bytes). The value of this field at VM start time acts as a hard limit of the amount of memory a guest can use. New values only take effect on reboot.";
-		field "dynamic_max" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamic maximum (bytes)";
-		field "dynamic_min" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamic minimum (bytes)";
-		field "static_min" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Statically-set (i.e. absolute) mininum (bytes). The value of this field indicates the least amount of memory this VM can boot with without crashing.";
+		field "overhead" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:DynamicRO "Virtualization memory overhead (bytes)." ~default_value:(Some (VInt 0L)) ~doc_tags:[Memory];
+		field "target" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamically-set memory target (bytes). The value of this field indicates the current target for memory available to this VM." ~default_value:(Some (VInt 0L)) ~internal_deprecated_since:rel_midnight_ride ~doc_tags:[Memory];
+		field "static_max" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Statically-set (i.e. absolute) maximum (bytes). The value of this field at VM start time acts as a hard limit of the amount of memory a guest can use. New values only take effect on reboot." ~doc_tags:[Memory];
+		field "dynamic_max" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamic maximum (bytes)" ~doc_tags:[Memory];
+		field "dynamic_min" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Dynamic minimum (bytes)" ~doc_tags:[Memory];
+		field "static_min" ~writer_roles:_R_VM_POWER_ADMIN ~qualifier:StaticRO "Statically-set (i.e. absolute) mininum (bytes). The value of this field indicates the least amount of memory this VM can boot with without crashing." ~doc_tags:[Memory];
 	]
 
 (** Host Memory *)
 let host_memory =
 	let field = field ~ty:Int in
 	[
-		field ~qualifier:DynamicRO "overhead" "Virtualization memory overhead (bytes)." ~default_value:(Some (VInt 0L));
+		field ~qualifier:DynamicRO "overhead" "Virtualization memory overhead (bytes)." ~default_value:(Some (VInt 0L)) ~doc_tags:[Memory];
 	]
 
 (** Host Metrics Memory *)
 let host_metrics_memory = 
 	let field = field ~ty:Int in
 	[
-		field ~qualifier:DynamicRO "total" "Total host memory (bytes)";
-		field ~qualifier:DynamicRO ~internal_deprecated_since:rel_midnight_ride "free" "Free host memory (bytes)";
+		field ~qualifier:DynamicRO "total" "Total host memory (bytes)" ~doc_tags:[Memory];
+		field ~qualifier:DynamicRO ~internal_deprecated_since:rel_midnight_ride "free" "Free host memory (bytes)" ~doc_tags:[Memory];
 	]
 
 let api_version = 
@@ -4075,6 +4104,14 @@ let host_get_server_certificate = call
   ~allowed_roles:_R_POOL_OP
   ()
 
+let host_display =
+	Enum ("host_display", [
+		"enabled", "This host is outputting its console to a physical display device";
+		"disable_on_reboot", "The host will stop outputting its console to a physical display device on next boot";
+		"disabled", "This host is not outputting its console to a physical display device";
+		"enable_on_reboot", "The host will start outputting its console to a physical display device on next boot";
+	])
+
 let host_operations =
   Enum ("host_allowed_operations", 
 	[ "provision", "Indicates this host is able to provision another VM"; 
@@ -4275,6 +4312,28 @@ let host_sync_pif_currently_attached = call ~flags:[`Session]
 	~allowed_roles:_R_POOL_OP
 	()
 
+let host_enable_display = call
+	~name:"enable_display"
+	~lifecycle:[Published, rel_cream, ""]
+	~doc:"Enable console output to the physical display device next time this host boots"
+	~params:[
+		Ref _host, "host", "The host";
+	]
+	~result:(host_display, "This host's physical display usage")
+	~allowed_roles:_R_POOL_OP
+	()
+
+let host_disable_display = call
+	~name:"disable_display"
+	~lifecycle:[Published, rel_cream, ""]
+	~doc:"Disable console output to the physical display device next time this host boots"
+	~params:[
+		Ref _host, "host", "The host";
+	]
+	~result:(host_display, "This host's physical display usage")
+	~allowed_roles:_R_POOL_OP
+	()
+
 (** Hosts *)
 let host =
     create_obj ~in_db:true ~in_product_since:rel_rio ~in_oss_since:oss_since_303 ~internal_deprecated_since:None ~persist:PersistEverything ~gen_constructor_destructor:false ~name:_host ~descr:"A physical host" ~gen_events:true
@@ -4359,6 +4418,8 @@ let host =
 		 host_sync_pif_currently_attached;
 		 host_migrate_receive;
 		 host_declare_dead;
+		 host_enable_display;
+		 host_disable_display;
 		 ]
       ~contents:
         ([ uid _host;
@@ -4375,7 +4436,7 @@ let host =
 	field ~qualifier:DynamicRO ~ty:(Set String) "supported_bootloaders" "a list of the bootloaders installed on the machine";
 	field ~qualifier:DynamicRO ~ty:(Set (Ref _vm)) "resident_VMs" "list of VMs currently resident on host";
 	field ~qualifier:RW ~ty:(Map(String, String)) "logging" "logging configuration";
-	field ~qualifier:DynamicRO ~ty:(Set (Ref _pif)) "PIFs" "physical network interfaces";
+	field ~qualifier:DynamicRO ~ty:(Set (Ref _pif)) ~doc_tags:[Networking] "PIFs" "physical network interfaces";
 	field ~qualifier:RW ~ty:(Ref _sr) "suspend_image_sr" "The SR in which VDIs for suspend images are created";
 	field ~qualifier:RW ~ty:(Ref _sr) "crash_dump_sr" "The SR in which VDIs for crash dumps are created";
 	field ~in_oss_since:None ~qualifier:DynamicRO ~ty:(Set (Ref _host_crashdump)) "crashdumps" "Set of host crash dumps";
@@ -4383,8 +4444,8 @@ let host =
 	field ~qualifier:DynamicRO ~ty:(Set (Ref _pbd)) "PBDs" "physical blockdevices";
 	field ~qualifier:DynamicRO ~ty:(Set (Ref _hostcpu)) "host_CPUs" "The physical CPUs on this host";
 	field ~qualifier:DynamicRO ~in_product_since:rel_midnight_ride ~default_value:(Some (VMap [])) ~ty:(Map(String, String)) "cpu_info" "Details about the physical CPUs on this host";
-	field ~in_oss_since:None ~qualifier:RW ~ty:String "hostname" "The hostname of this host";
-	field ~in_oss_since:None ~qualifier:RW ~ty:String "address" "The address by which this host can be contacted from any other host in the pool";
+	field ~in_oss_since:None ~qualifier:RW ~ty:String ~doc_tags:[Networking] "hostname" "The hostname of this host";
+	field ~in_oss_since:None ~qualifier:RW ~ty:String ~doc_tags:[Networking] "address" "The address by which this host can be contacted from any other host in the pool";
 	field ~qualifier:DynamicRO ~ty:(Ref _host_metrics) "metrics" "metrics associated with this host";
 	field ~in_oss_since:None ~qualifier:DynamicRO ~ty:(Map (String,String)) "license_params" "State of the current license";
 	field ~in_oss_since:None ~internal_only:true ~qualifier:DynamicRO ~ty:Int "boot_free_mem" "Free memory on host at boot time";
@@ -4406,6 +4467,7 @@ let host =
 	field ~qualifier:DynamicRO ~lifecycle:[Published, rel_boston, ""] ~ty:(Set (Ref _pci)) "PCIs" "List of PCI devices in the host";
 	field ~qualifier:DynamicRO ~lifecycle:[Published, rel_boston, ""] ~ty:(Set (Ref _pgpu)) "PGPUs" "List of physical GPUs in the host";
 	field ~qualifier:RW ~in_product_since:rel_tampa ~default_value:(Some (VMap [])) ~ty:(Map (String, String)) "guest_VCPUs_params" "VCPUs params to apply to all resident guests";
+	field ~qualifier:RW ~in_product_since:rel_cream ~default_value:(Some (VEnum "enabled")) ~ty:host_display "display" "indicates whether the host is configured to output its console to a physical display device";
  ])
 	()
 
@@ -4554,6 +4616,7 @@ let network =
     create_obj ~in_db:true ~in_product_since:rel_rio ~in_oss_since:oss_since_303 ~internal_deprecated_since:None ~persist:PersistEverything ~gen_constructor_destructor:true ~name:_network ~descr:"A virtual network" ~gen_events:true
       ~doccomments:[]
       ~messages_default_allowed_roles:_R_VM_ADMIN (* vm admins can create/destroy networks without PIFs *)
+      ~doc_tags:[Networking]
       ~messages:[network_attach; network_pool_introduce; network_create_new_blob; network_set_default_locking_mode;
         network_attach_for_vm; network_detach_for_vm]
       ~contents:
@@ -4785,6 +4848,7 @@ let pif =
       ~gen_events:true
       ~doccomments:[] 
       ~messages_default_allowed_roles:_R_POOL_OP
+      ~doc_tags:[Networking]
       ~messages:[pif_create_VLAN; pif_destroy; pif_reconfigure_ip; pif_reconfigure_ipv6; pif_set_primary_address_type; pif_scan; pif_introduce; pif_forget;
 		pif_unplug; pif_plug; pif_pool_introduce;
 		pif_db_introduce; pif_db_forget; pif_set_property
@@ -4834,6 +4898,7 @@ let pif_metrics =
       ~gen_events:true
       ~doccomments:[]
       ~messages_default_allowed_roles:_R_POOL_OP
+      ~doc_tags:[Networking]
       ~messages:[] ~contents:
       [ uid _pif_metrics;
 	namespace ~name:"io" ~contents:iobandwidth ();
@@ -4907,6 +4972,7 @@ let bond_set_property = call
 let bond = 
   create_obj ~in_db:true ~in_product_since:rel_miami ~in_oss_since:None ~internal_deprecated_since:None ~persist:PersistEverything ~gen_constructor_destructor:false ~name:_bond ~descr:"" ~gen_events:true ~doccomments:[]
     ~messages_default_allowed_roles:_R_POOL_OP
+    ~doc_tags:[Networking]
     ~messages:[ bond_create; bond_destroy; bond_set_mode; bond_set_property ]
     ~contents:
     [ uid _bond;
@@ -4943,6 +5009,7 @@ let vlan =
   create_obj ~in_db:true ~in_product_since:rel_miami ~in_oss_since:None ~internal_deprecated_since:None ~persist:PersistEverything ~gen_constructor_destructor:false ~name:_vlan ~descr:"A VLAN mux/demux" ~gen_events:true
     ~doccomments:[]
     ~messages_default_allowed_roles:_R_POOL_OP
+    ~doc_tags:[Networking]
     ~messages:[ vlan_create; vlan_destroy ] ~contents:
     ([
        uid _vlan;
@@ -4976,6 +5043,7 @@ let tunnel =
 	create_obj ~in_db:true ~lifecycle:[Published, rel_cowley, "A tunnel for network traffic"] ~in_oss_since:None ~persist:PersistEverything ~gen_constructor_destructor:false ~name:_tunnel ~descr:"A tunnel for network traffic" ~gen_events:true
 	~doccomments:[]
 	~messages_default_allowed_roles:_R_POOL_OP
+	~doc_tags:[Networking]
 	~messages:[ tunnel_create; tunnel_destroy ]
 	~contents:([
 		uid _tunnel ~lifecycle:[Published, rel_cowley, "Unique identifier/object reference"];
@@ -5147,6 +5215,7 @@ let vif =
       ~gen_events:true
       ~doccomments:[] 
       ~messages_default_allowed_roles:_R_VM_ADMIN
+      ~doc_tags:[Networking]
       ~messages:[vif_plug; vif_unplug; vif_unplug_force; vif_set_locking_mode;
         vif_set_ipv4_allowed; vif_add_ipv4_allowed; vif_remove_ipv4_allowed; vif_set_ipv6_allowed; vif_add_ipv6_allowed; vif_remove_ipv6_allowed]
       ~contents:
@@ -5174,6 +5243,7 @@ let vif_metrics =
       ~gen_events:true
       ~doccomments:[]
       ~messages_default_allowed_roles:_R_VM_ADMIN
+      ~doc_tags:[Networking]
       ~messages:[] ~contents:
       [ uid _vif_metrics;
 	namespace ~name:"io" ~contents:iobandwidth ();
@@ -6879,7 +6949,7 @@ let vm =
 	namespace ~name:"actions" ~contents:actions ();
 	
 	field ~writer_roles:_R_POOL_ADMIN ~qualifier:DynamicRO ~ty:(Set (Ref _console)) "consoles" "virtual console devices";
-	field ~qualifier:DynamicRO ~ty:(Set (Ref _vif)) "VIFs" "virtual network interfaces";
+	field ~qualifier:DynamicRO ~ty:(Set (Ref _vif)) ~doc_tags:[Networking] "VIFs" "virtual network interfaces";
 	field ~qualifier:DynamicRO ~ty:(Set (Ref _vbd)) "VBDs" "virtual block devices";
 	field ~writer_roles:_R_POOL_ADMIN ~qualifier:DynamicRO ~ty:(Set (Ref _crashdump)) "crash_dumps" "crash dumps associated with this VM";
 	field ~qualifier:DynamicRO ~ty:(Set (Ref _vtpm)) "VTPMs" "virtual TPMs";
@@ -7560,6 +7630,7 @@ let event =
     force_custom_actions=None;
     obj_allowed_roles=_R_POOL_ADMIN;
     obj_implicit_msg_allowed_roles=_R_ALL;
+    obj_doc_tags=[];
   }
 
 (** Blobs - binary blobs of data *)

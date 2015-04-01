@@ -1408,7 +1408,7 @@ module Forward = functor(Local: Custom_actions.CUSTOM_ACTIONS) -> struct
 				(fun () ->
 				  List.iter (fun (task,op) ->
 				    if op = `clean_shutdown then
-				      try Local.Task.cancel ~__context ~task:(Ref.of_string task) with _ -> ()) (Db.VM.get_current_operations ~__context ~self:vm);
+				      try Task.cancel ~__context ~task:(Ref.of_string task) with _ -> ()) (Db.VM.get_current_operations ~__context ~self:vm);
 
 					(* If VM is actually suspended and we ask to hard_shutdown, we need to
 					   forward to any host that can see the VDIs *)
@@ -1447,7 +1447,7 @@ module Forward = functor(Local: Custom_actions.CUSTOM_ACTIONS) -> struct
 				(fun () ->
 				  List.iter (fun (task,op) ->
 				    if op = `clean_reboot then
-				      try Local.Task.cancel ~__context ~task:(Ref.of_string task) with _ -> ()) (Db.VM.get_current_operations ~__context ~self:vm);
+				      try Task.cancel ~__context ~task:(Ref.of_string task) with _ -> ()) (Db.VM.get_current_operations ~__context ~self:vm);
 
 
 					with_vbds_marked ~__context ~vm ~doc:"VM.hard_reboot" ~op:`attach
@@ -2534,6 +2534,18 @@ module Forward = functor(Local: Custom_actions.CUSTOM_ACTIONS) -> struct
 		let migrate_receive ~__context ~host ~network ~options =
 			info "Host.migrate_receive: host = '%s'; network = '%s'" (host_uuid ~__context host) (network_uuid ~__context network);
 			Local.Host.migrate_receive ~__context ~host ~network ~options
+
+		let enable_display ~__context ~host =
+			info "Host.enable_display: host = '%s'" (host_uuid ~__context host);
+			let local_fn = Local.Host.enable_display ~host in
+			do_op_on ~local_fn ~__context ~host
+				(fun session_id rpc -> Client.Host.enable_display rpc session_id host)
+
+		let disable_display ~__context ~host =
+			info "Host.disable_display: host = '%s'" (host_uuid ~__context host);
+			let local_fn = Local.Host.disable_display ~host in
+			do_op_on ~local_fn ~__context ~host
+				(fun session_id rpc -> Client.Host.disable_display rpc session_id host)
 	end
 
 	module Host_crashdump = struct

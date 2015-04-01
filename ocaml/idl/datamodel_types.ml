@@ -151,7 +151,7 @@ and obj_op = Make | Delete | GetByUuid | GetByLabel | GetRecord | GetAll | GetAl
 
 and param = {param_type:ty; param_name:string; param_doc:string; param_release: release; param_default: api_value option}
 
-and doc_tag = VM_lifecycle | Snapshots | Networking
+and doc_tag = VM_lifecycle | Snapshots | Networking | Memory
 
 (** Types of RPC messages; in addition to those generated for object fields *)
 and message = { 
@@ -240,7 +240,8 @@ type obj = {
 	gen_events: bool;
 	persist: persist_option;
 	obj_release: release;
-	in_database: bool (* If the object is in the database *)
+	in_database: bool; (* If the object is in the database *)
+	obj_doc_tags: doc_tag list;
 } with rpc
 
 (* val rpc_of_obj : obj -> Rpc.t *)
